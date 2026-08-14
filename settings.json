@@ -5,25 +5,25 @@
     "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
     "ANTHROPIC_AUTH_TOKEN": "REPLACE_WITH_YOUR_ZAI_API_KEY",
 
-    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.2[1m]",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.2[1m]",
-    "ANTHROPIC_DEFAULT_FABLE_MODEL": "glm-5.2[1m]",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5.2",
-    "CLAUDE_CODE_SUBAGENT_MODEL": "opus",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-5.3[1m]",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-5.3[1m]",
+    "ANTHROPIC_DEFAULT_FABLE_MODEL": "glm-5.3[1m]",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-5.3",
 
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "GLM-5.2 (1M)",
-    "ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION": "Z.AI GLM-5.2 / 1M context / reasoning_effort=max",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_NAME": "GLM-5.3 (1M)",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL_DESCRIPTION": "Z.AI GLM-5.3 / 1M context / reasoning_effort=max",
     "ANTHROPIC_DEFAULT_OPUS_MODEL_SUPPORTED_CAPABILITIES": "effort,xhigh_effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
-    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "GLM-5.2 (1M)",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL_NAME": "GLM-5.3 (1M)",
     "ANTHROPIC_DEFAULT_SONNET_MODEL_SUPPORTED_CAPABILITIES": "effort,xhigh_effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
     "ANTHROPIC_DEFAULT_FABLE_MODEL_SUPPORTED_CAPABILITIES": "effort,xhigh_effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
-    "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "GLM-5.2 (background)",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL_NAME": "GLM-5.3 (background)",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL_SUPPORTED_CAPABILITIES": "effort,xhigh_effort,max_effort,thinking,adaptive_thinking,interleaved_thinking",
 
     "CLAUDE_CODE_EFFORT_LEVEL": "xhigh",
     "CLAUDE_CODE_ALWAYS_ENABLE_EFFORT": "1",
+    "CLAUDE_CODE_ENABLE_TODO_TOOLS": "1",
 
-    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "1000000",
+    "CLAUDE_CODE_AUTO_COMPACT_WINDOW": "800000",
     "CLAUDE_CODE_MAX_CONTEXT_TOKENS": "1000000",
     "CLAUDE_CODE_MAX_OUTPUT_TOKENS": "131072",
 
@@ -45,7 +45,6 @@
     "CLAUDE_CODE_MCP_TOOL_IDLE_TIMEOUT": "600000",
     "CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS": "0",
 
-    "CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION": "1000",
     "CLAUDE_ASYNC_AGENT_STALL_TIMEOUT_MS": "3600000",
     "CLAUDE_CODE_FORK_SUBAGENT": "1",
     "CLAUDE_CODE_PRINT_BG_WAIT_CEILING_MS": "0",
@@ -59,12 +58,14 @@
     "DISABLE_TELEMETRY": "1",
 
     "CLAUDE_CODE_USE_POWERSHELL_TOOL": "1",
+    "CLAUDE_CODE_ALT_SCREEN_FULL_REPAINT": "1",
 
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
 
   "model": "opus",
   "effortLevel": "xhigh",
+  "workflowSizeGuideline": "unrestricted",
   "alwaysThinkingEnabled": true,
   "showThinkingSummaries": true,
 
@@ -72,7 +73,11 @@
 
   "defaultShell": "powershell",
 
+  "tui": "fullscreen",
+  "preferredNotifChannel": "terminal_bell",
+
   "autoUpdatesChannel": "latest",
+  "minimumVersion": "2.1.233",
   "cleanupPeriodDays": 365,
 
   "attribution": {
@@ -97,6 +102,8 @@
       "LSP",
       "Skill",
       "Monitor",
+      "EnterWorktree",
+      "Workflow",
       "WebFetch",
       "WebSearch",
       "mcp__zai-mcp-server",
