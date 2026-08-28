@@ -15,5 +15,29 @@ GLM Coding Plan MAX × Claude Code（Windows CLI）——**产能型专项配置
 | --- | --- |
 | [`settings.json`](./settings.json) | 部署至 `%USERPROFILE%\.claude\settings.json`，替换 `ANTHROPIC_AUTH_TOKEN` 为实际 Z.AI API Key；三别名位 `glm-5.3-flash[1m]` + Haiku 位裸名 `glm-5.3-flash`，含 flash 专项并发调优（已通过官方 JSON Schema 校验） |
 | [`GUIDE.md`](./GUIDE.md) | 产能型专项手册：四大支柱选型论证与口径声明；与 main 的分工矩阵；三场景（高强度并行开发 / A 股例行产能轨 / 视觉密集工作流）；多模态主线图片作业规程；并发上调的完整论证与回落预案；5h 窗口容量数学；无人值守双轨；MCP（Vision MCP 定位为视频 + 回退）；验证清单 / 故障表 / 基准备查 |
+| [`d-glmf.bat`](./d-glmf.bat) | **一键部署入口**：终端输入 `d-glmf`（需本目录在 PATH）或到本目录双击运行，自动从 `GLM_API_KEY` 环境变量回填密钥、部署整套配置并**移除** vision 子代理，详见下文「一键部署」 |
+| [`deploy.ps1`](./deploy.ps1) | 部署逻辑本体（`d-glmf.bat` 仅是薄封装；也可带参数直接运行，支持 `-KeyEnvName` / `-ProfileLabel` / `-AgentAction deploy|remove|none`） |
 
-部署三步：settings.json 就位 → **删除** `~\.claude\agents\vision.md`（本架构无视觉子代理，残留即错误路由）→ 重启后按 GUIDE 第 17 章验证（重点第 3 条显示名、**第 8 条主线吃图**——Anthropic 端点 image 块为唯一待实测环节，回退 Vision MCP）。
+## 一键部署（d-glmf）
+
+终端输入 `d-glmf`（需本目录在 PATH）或双击 `d-glmf.bat`，一条命令完成"回填密钥 + 部署 settings.json + 移除视觉子代理 + 备份原配置"，无需手改文件、无需粘贴密钥。
+
+一次性准备（设完永久生效；也可在「编辑账户的环境变量」界面手动添加）：
+
+```powershell
+setx GLM_API_KEY "sk-你的 Z.AI API Key"
+
+# 将本仓库目录加入用户 PATH（按实际 clone 位置调整，不加 PATH 双击 .bat 亦可）
+[Environment]::SetEnvironmentVariable('Path',
+  [Environment]::GetEnvironmentVariable('Path','User') + ';D:\Source\glm-flash-settings',
+  'User')
+```
+
+日常部署：任意终端输入 `d-glmf` 回车即可（PATH 变更需新开终端生效）。`deploy.ps1` 自动完成：
+
+1. 读取 `GLM_API_KEY`（当前进程 → 用户级注册表，`setx` 设完无需重开终端）；
+2. 回填 `ANTHROPIC_AUTH_TOKEN` 占位符，JSON 校验后以 UTF-8 无 BOM 写出，覆盖前自动将现有配置备份为 `.bak-<时间戳>`；
+3. **备份并移除** vision 子代理 `%USERPROFILE%\.claude\agents\vision.md`——本架构主线即多模态模型，无视觉子代理，残留即错误路由；
+4. 打印端点 / 模型 / 密钥掩码摘要。
+
+部署目标为 `%USERPROFILE%\.claude\settings.json`。已运行的会话不热加载 settings.json，部署后请新开 Claude Code 会话。
